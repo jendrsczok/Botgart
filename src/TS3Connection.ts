@@ -62,7 +62,7 @@ export class TS3Connection {
             path: "/",
             headers: {
                 "Content-Type": "application/json",
-                "Content-Length": dataString.length
+                "Content-Length": Buffer.byteLength(dataString)
             }
         };
         const settings: HTTPRequestOptions = options === undefined ? defaults : Object.assign({}, defaults, options);
@@ -104,7 +104,6 @@ export class TS3Connection {
         this.port = ts3port;
         this.name = name !== undefined ? name : `TS3Connection[${TS3Connection.CONNECTION_COUNTER++}]`;
         this.buffer = CircularBuffer<string>(TS3Connection.CIRCULAR_BUFFER_SIZE);
-        this.post("/resetroster", {}).then(r => log("debug", r)).catch(er => log("error", er));
     }
 }
 
